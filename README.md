@@ -13,8 +13,8 @@ This project is about Weather Forecast. In Allows user to search about weather f
 - Responsive on multiple devices.
 - Interactive UI.
 
-##Installation
-```git bash```
+```github repo```
+Check out the project here:- https://github.com/hds05/Weather-Forecast.git
 
 ```terminal```
 cd weather-Forecast
