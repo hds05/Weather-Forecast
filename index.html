@@ -5,22 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
     <link href="./src/output.css" rel="stylesheet">
 </head>
 
 <body>
-    <header class="bg-blue-950 w-full p-4 text-center mask-linear-from-neutral-100">
-        <!-- <div> -->
-            <h1 class="text-4xl text-white underline mask-linear-from-neutral-500">Weatherly</h1>
-        <!-- </div> -->
-        <!-- <nav></nav> -->
-    </header>
-    <div></div>
-    <div class="relative top-3">
-        <img src="https://www.pngall.com/wp-content/uploads/17/Bright-Smiling-Sun-Symbol-PNG.png"
-            class="absolute top-0 z-1 left-8" width="80" height="80" alt="">
-        <img src="https://cdn-icons-png.flaticon.com/512/4834/4834559.png" width="80" height="80"
-            alt="">
+    <!-- LOADER -->
+    <!-- <div id="loader" class="loader">
+        <div class="loader-scene">
+
+        </div>
+        <p class="loading-text">Loading Weather...</p>
+    </div> -->
+
+    <div id="app">
+        <!-- class="hidden" -->
+
+        <header
+            class="flex bg-blue-950 w-full px-5 md:px-10 py-2 text-center items-center justify-evenly md:justify-between shadow-[100px_100px_10px_white]">
+            <div class="flex justify-center items-center">
+                <img class="w-10 h-10 md:w-15 md:h-15" src="./images/climate.png" alt="">
+                <h1 class="text-2xl text-white p-2 md:text-4xl">Weatherly</h1>
+            </div>
+            <div class="relative">
+                <img src="https://www.pngall.com/wp-content/uploads/17/Bright-Smiling-Sun-Symbol-PNG.png"
+                    class="sun absolute top-0 z-1 left-8 w-[50px] h-[50px] md:w-[80px] md:h-[80px]" alt="">
+                <img src="https://cdn-icons-png.flaticon.com/512/4834/4834559.png" class="cloud w-[50px] h-[50px] md:w-[80px] md:h-[80px]" 
+                    alt="">
+            </div>
+        </header>
+        <div class="box py-8 px-6 flex justify-between">
+            <div class="">
+                <input id="findCity" type="text" class="inputCity rounded-2xl py-2 px-1"
+                    placeholder="Enter City Name...">
+                <div class="p-2 current">📍</div>
+            </div>
+            <div class="text-right bg-gray-400 p-4 rounded-2xl">
+                <div class="flex justify-center items-center flex-col">
+                    <h1 id="temp" class="text-white text-2xl"></h1><img id="iconWeather"  />
+                    <p id="humidity"></p>
+                    <p id="pressure"></p>
+                    <h3 id="cityName"></h3>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="index.js"></script>
 </body>
