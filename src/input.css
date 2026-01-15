@@ -1,50 +1,73 @@
 @import "tailwindcss";
 
-.headerr{
-    box-shadow: 10px 10px 10px white;
+.headerr {
+    box-shadow: 0px 10px 10px white;
 }
-.box{
+
+.box {
     height: 84vh;
+    /* height: 100vh; */
     /* background: linear-gradient(rgb(29, 37, 53) , rgb(5, 5, 66), rgb(14, 14, 14)); */
-    background: linear-gradient(rgb(0, 0, 0) , rgb(5, 5, 66), rgb(18, 56, 82));
+    /* background: linear-gradient(rgb(0, 0, 0) , rgb(5, 5, 66), rgb(18, 56, 82)); */
 }
-.sun{
+
+.bgImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1592210454359-9043f067919b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2VhdGhlcnxlbnwwfHwwfHx8MA%3D%3D');
+    background-position: center;
+    background-size: cover;
+    filter: blur(4px);
+    z-index: -1;
+}
+
+.sun {
     /* animation: floatingSun;
     animation-iteration-count: infinite;
     animation-duration: 2s; */
     animation: floatingSun 2.5s infinite alternate ease-in-out;
 }
+
 @keyframes floatingSun {
-    0%{
+    0% {
         transform: translateX(1px) scale(1);
     }
-    50%{
+
+    50% {
         transform: translateX(2px) scale(1.1);
     }
-    100%{
+
+    100% {
         transform: translateX(1px) scale(1);
     }
 }
-.cloud{
-    /* animation: floatingSun;
-    animation-iteration-count: infinite;
-    animation-duration: 2s; */
+
+.cloud {
     animation: floatingCloud 2s infinite alternate ease;
 }
+
 @keyframes floatingCloud {
-    0%{
-        transform: translateX(1px) ;
+    0% {
+        transform: translateX(1px);
     }
-    100%{
+
+    100% {
         transform: translateX(5px);
     }
 }
 
-.inputCity{
+.inputCity {
     background: #ffffff;
     width: 100%;
 }
 
-.currentLocation{
+.currentLocation {
     background: #ffffff;
+}
+.currentDataBox{
+    height: fit-content;
+    box-shadow: 0px 5px 10px gray;
+    border-radius: 40px;
+    text-align: center;
 }

@@ -10,7 +10,7 @@
 //     }, 2000);
 // });
 
-const apiKey = 'b744b1e64e05838015e48352843977a3'
+const apiKey = 'my_API_key'
 // const city = document.querySelector('#findCity')
 // city.addEventListener('input', (e)=>{
 //     let namee= city.innerText = e.target.value
@@ -18,8 +18,6 @@ const apiKey = 'b744b1e64e05838015e48352843977a3'
     
 // })
 const city = 'haryana'
-// const api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
-// console.log(api);
 async function fetchWeather() {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
     const data = await response.json();
@@ -52,9 +50,9 @@ async function fetchWeather() {
     findCity.innerText = cityName
     // Humidity
     const humidity = document.querySelector('#humidity')
-    humidity.innerText = humid
+    humidity.innerText = `Humidity:- ${humid}`
     // Pressure
     const pressure = document.querySelector('#pressure')
-    pressure.innerText = prsr
+    pressure.innerText = `Pressure:- ${prsr}`
 }
 fetchWeather();
