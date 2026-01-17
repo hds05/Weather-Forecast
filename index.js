@@ -10,24 +10,29 @@
 //     }, 2000);
 // });
 
-const apiKey = 'my_API_key'
+// const apiKey = 'my_API_key'
+const apiKey = '0271dc5cc15767ab5d712f36bfc476c3'
 
 const findCity = document.querySelector('#findCity')
 
-
-// Tomorrow work on this
-// function unit(){
-//     const btn = document.createElement('button')
-//     btn.addEventListener('click', ()=>{
-//         // use metric for celcius and imperial for fahraniet
-//        units= units=metric? units=imperial: units=metric
-//     })
-// }
-// unit();
+let unit = "metric";
+// Temprature Toggle
+const unitToggle = document.querySelector('#unitToggle');
+unitToggle.addEventListener('click', () => {
+    if (unit === "metric") {
+        unit = "imperial";
+        unitToggle.innerText = "°F";
+    } else {
+        unit = "metric";
+        unitToggle.innerText = "°C";
+    }
+    fetchWeather(currentCity); 
+});
 
 async function fetchWeather(city) {
     try {
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+        currentCity = city
+        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`)
         const data = await response.json();
         console.log(data);
 
@@ -65,13 +70,14 @@ async function fetchWeather(city) {
         // console.log(data);
         // console.log(temp);
         // console.log(City);
+        setBgByWeatherId(data.weather[0].id);
 
         // Time & Date/Month/Year
         const day = document.querySelector('#currentDate')
         day.innerText = formatted
         // Temprature
         const temprature = document.querySelector('#temp')
-        temprature.innerText = `${temp} °C`
+        temprature.innerText = `${(temp)}`;
         // Icon
         const iconWeather = document.querySelector('#iconWeather')
         iconWeather.src = iconUrl
@@ -105,22 +111,48 @@ async function fetchWeather(city) {
     }
 }
 
+// Weather Background Image
+function setBgByWeatherId(id) {
+    const bg = document.querySelector('.bgImg');
+
+    if (id >= 200 && id < 300)
+        bg.style.backgroundImage = "url('./images/thunderstorm-country.jpg')";
+    else if (id >= 300 && id < 600)
+        bg.style.backgroundImage = "url('./images/rainy-forest.jpg')";
+    else if (id >= 600 && id < 700)
+        bg.style.backgroundImage = "url('./images/snow.jpg')";
+    else if (id >= 700)
+        bg.style.backgroundImage = "url('./images/haze.jpg')";
+    else if (id === 800)
+        bg.style.backgroundImage = "url('./images/clear.jpg')";
+    else
+        bg.style.backgroundImage = "url('./images/cloudy.jpg')";
+}
+
 // Show alert for:- 1. Invalid city. 2. Empty Input. 3. Network Error
 function showAlert(message) {
-    // document.querySelector('.alertDiv')?.remove();
+    const divParent = document.createElement('div');
+    divParent.classList.add('alertDiv');
 
-    const div = document.createElement('div');
-    div.classList.add('alertDiv')
+    const divChild = document.createElement('div');
+    divChild.classList.add('alertDivChild');
+
+    const gif = document.createElement('img');
+    gif.classList.add('gif');
+    gif.src = "./images/cry.gif";
 
     const p = document.createElement('p');
-    div.innerText = message;
+    p.innerText = ` ${message} `;
 
-    div.appendChild(p);
-    document.body.appendChild(div);
-    console.log('showAlert called:', message);
+    divChild.appendChild(gif);
+    divChild.appendChild(p);
 
-    setTimeout(() => div.remove(), 3000);
+    divParent.appendChild(divChild);
+    document.body.appendChild(divParent);
+
+    setTimeout(() => divParent.remove(), 3000);
 }
+
 
 
 // Fetch when user changes city
