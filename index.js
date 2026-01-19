@@ -26,21 +26,43 @@ unitToggle.addEventListener('click', () => {
         unit = "metric";
         unitToggle.innerText = "°C";
     }
-    fetchWeather(currentCity); 
+    fetchWeather(currentCity);
 });
 
+let currentCity = "Delhi"
 async function fetchWeather(city) {
     try {
         currentCity = city
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`)
-        const data = await response.json();
-        console.log(data);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`)
+        const forecastResponse = await fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+        );
 
         // Alert if response is not right.
         if (!response.ok) {
-            showAlert(data.message || 'City not found');
+            let errResponse = await response.json();
+            showAlert(errResponse.message || 'City not found');
             return;
         }
+        if (!forecastResponse.ok) {
+            let errForecast = await forecastResponse.json();
+            showAlert(errForecast.message || 'City not found');
+            return;
+        }
+        const data = await response.json();
+        const forecastData = await forecastResponse.json();
+        console.log(data);
+
+        // console.log(data.weather[0].main);
+        // console.log(data.weather[0].description);
+        // console.log(data.weather[0].icon);
+        // console.log(data);
+
+        console.log(forecastData);
+        console.log(forecastData.list[0]);
+        console.log(forecastData.list[0].weather[0].main);
+        console.log(forecastData.list[0].weather[0].description);
+
 
         // let temp = data.weather[0].description
         let humid = data.main.humidity
@@ -60,21 +82,20 @@ async function fetchWeather(city) {
             hour12: true
         });
 
+        if ((unit === 'metric' && temp > 40) || (unit === 'imperial' && temp > 104)) {
+            showAlert('Temperature is too High..')
+        }
 
         // URL for icon of the weather
         const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`
 
-        // console.log(data.weather[0].main);
-        // console.log(data.weather[0].description);
-        // console.log(data.weather[0].icon);
-        // console.log(data);
         // console.log(temp);
         // console.log(City);
-        setBgByWeatherId(data.weather[0].id);
+        setBgByWeatherId(data.weather[0].main);
 
         // Time & Date/Month/Year
         const day = document.querySelector('#currentDate')
-        day.innerText = formatted
+        if (city.trim().toLowerCase() === 'delhi') { day.innerText = formatted } else { day.innerText = '' }
         // Temprature
         const temprature = document.querySelector('#temp')
         temprature.innerText = `${(temp)}`;
@@ -94,16 +115,65 @@ async function fetchWeather(city) {
         const pressureImage = document.querySelector('.pressureImg')
         pressureImage.src = './images/barometer.png'
         pressure.innerText = ` ${prsr} hPa`
-
         // Wind
         const wind = document.querySelector('#wind')
         const windImage = document.querySelector('.windImg')
         windImage.src = './images/wind.png'
         wind.innerText = `${windDeg} Deg, ${windSpeed} spd`
 
-        //     findCity.addEventListener('change', ()=>{
+        //     findCity.addEventListener('change', ()=>{        // Have to remove
         //     city = findCity.value     
         // })
+        const foreCastDays = document.querySelector('#weatherForecast');
+        foreCastDays.innerHTML = ''; // clear old forecast
+
+        // Loop through first 5 forecast items (or any number you want)
+        forecastData.list.slice(0, 5).forEach(item => {
+            // const dayDiv = document.createElement('div');     // Have to remove
+            // dayDiv.classList.add('forecastDetail');
+            const dayDivForecast = document.createElement('div');
+            dayDivForecast.classList.add('upcomingDays');
+            const forecastDate = document.createElement('div');
+            forecastDate.style.fontSize = '13px'
+            const forecastTemp = document.createElement('div');
+            forecastTemp.style.fontSize = '14px'
+
+            const temp = item.main.temp;
+            const main = item.weather[0].main;
+            const icon = item.weather[0].icon;
+            const date = item.dt_txt;
+            const humidity = item.main.humidity;
+            const windDeg = item.wind.speed;
+            const windSpeed = item.wind.deg;
+            const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
+            // Create content                                   // Have to remove
+            //         dayDivForecast.innerHTML = `
+            //     <div>
+            //     <p>${date}</p>
+            //     <img src="${iconUrl}" alt="${main}" />
+            //     </div>
+            //     <div>
+            //     <p>${temp}°C</p>
+            //     <p>${main}</p>
+            //     </div>
+            // `;
+            forecastDate.innerHTML = `
+            <p>${date}</p>
+            <img src="${iconUrl}" width='50px' alt="${main}" />
+            `;
+            // <p>${main}</p>
+            forecastTemp.innerHTML = `
+                <p>${temp}°C</p>
+                <p>${humidity}</p>
+                <p>${windSpeed}, ${windDeg}</p>
+            `
+            // dayDiv.appendChild(dayDivForecast)
+            dayDivForecast.append(forecastDate, forecastTemp);
+            foreCastDays.appendChild(dayDivForecast);
+            // foreCastDays.appendChild(dayDiv);
+        });
+
     }
     catch (err) {
         showAlert('Network error. Please try again.');
@@ -112,18 +182,19 @@ async function fetchWeather(city) {
 }
 
 // Weather Background Image
-function setBgByWeatherId(id) {
+function setBgByWeatherId(main) {
     const bg = document.querySelector('.bgImg');
+    console.log(main);
 
-    if (id >= 200 && id < 300)
-        bg.style.backgroundImage = "url('./images/thunderstorm-country.jpg')";
-    else if (id >= 300 && id < 600)
+    if (main === "Mist")
+        bg.style.backgroundImage = "url('./images/mist.jpg')";
+    else if (main === 'Rain')
         bg.style.backgroundImage = "url('./images/rainy-forest.jpg')";
-    else if (id >= 600 && id < 700)
+    else if (main === 'Snow')
         bg.style.backgroundImage = "url('./images/snow.jpg')";
-    else if (id >= 700)
-        bg.style.backgroundImage = "url('./images/haze.jpg')";
-    else if (id === 800)
+    else if (main === 'Haze')
+        bg.style.backgroundImage = "url('./images/haze1.jpg')";
+    else if (main === 'Clear')
         bg.style.backgroundImage = "url('./images/clear.jpg')";
     else
         bg.style.backgroundImage = "url('./images/cloudy.jpg')";
@@ -139,7 +210,7 @@ function showAlert(message) {
 
     const gif = document.createElement('img');
     gif.classList.add('gif');
-    gif.src = "./images/cry.gif";
+    gif.src = message === 'Temperature is too High..' ? "./images/hot.png" : "./images/cry.gif";
 
     const p = document.createElement('p');
     p.innerText = ` ${message} `;
@@ -153,9 +224,7 @@ function showAlert(message) {
     setTimeout(() => divParent.remove(), 3000);
 }
 
-
-
-// Fetch when user changes city
+// Fetch when user changes the city
 findCity.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         const city = findCity.value.trim();

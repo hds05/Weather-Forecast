@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 header {
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.39);
-    z-index: 99999;
+    /* box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.493); */
+    z-index: 9999;
+    background: #2e2b2bb2;
+    backdrop-filter: blur(23px);
 }
 
 .box {
@@ -16,13 +18,14 @@ header {
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     /* background-image: url('https://images.unsplash.com/photo-1592210454359-9043f067919b?...'); */
-    background-size: contain;
-    background-position: center;
+    background-size: cover;
+    /* background-position: center; */
     transition: background-image 0.4s ease-in-out;
-    /* filter: grayscale(80%) blur(4px); */
+    filter: grayscale(50%) blur(4px);
     z-index: -1;
+    background-repeat: no-repeat;
 }
 
 @media (max-width:768px) {
@@ -82,16 +85,36 @@ header {
 } */
 .currentDataBox {
     /* height: fit-content; */
-    box-shadow: 0px 5px 10px rgba(41, 41, 41, 0.603);
+    box-shadow: 0px 5px 10px rgb(41, 41, 41);
     /* border-radius: 40px; */
     /* text-align: center; */
     background: rgba(0, 0, 0, 0.466);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);    
 }
 
 /* weather-details */
-.weather-details {}
+.weather-details {
+    padding: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 40vh;
+    /* justify-content: space-between; */
+}
+.upcomingDays {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(77, 69, 69, 0.541);
+    /* height: fit-content; */
+    padding: 10px;
+    color: white;
+    border-radius: 40px;
+    box-shadow: 0px 1px 1px white;
+}
 
 /* ================== */
 /* .alertDiv{
@@ -121,6 +144,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width: 50%;
     height: 50%;
     background: rgb(255, 255, 255);
@@ -133,4 +157,13 @@ header {
 .gif{
 width: 150px;
 height:150px
+}
+@media (max-width:428px){
+    .alertDivChild{
+        font-size: small;
+    }
+    .gif{
+        width: 70px;
+        height: 70px;
+    }
 }
