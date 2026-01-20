@@ -116,6 +116,19 @@ header {
     box-shadow: 0px 1px 1px white;
 }
 
+#Dropdown{
+    border-radius: 40px;
+    color: black;
+}
+#cityDropdown{
+    height: 100%;
+    border: none;
+    background-color: rgb(61, 59, 59);
+    color: white;
+    border-radius: 30px;
+    padding: 8px;
+}
+
 /* ================== */
 /* .alertDiv{
     width: 100%;

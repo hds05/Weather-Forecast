@@ -58,10 +58,10 @@ async function fetchWeather(city) {
         // console.log(data.weather[0].icon);
         // console.log(data);
 
-        console.log(forecastData);
-        console.log(forecastData.list[0]);
-        console.log(forecastData.list[0].weather[0].main);
-        console.log(forecastData.list[0].weather[0].description);
+        // console.log(forecastData);
+        // console.log(forecastData.list[0]);
+        // console.log(forecastData.list[0].weather[0].main);
+        // console.log(forecastData.list[0].weather[0].description);
 
 
         // let temp = data.weather[0].description
@@ -164,9 +164,9 @@ async function fetchWeather(city) {
             `;
             // <p>${main}</p>
             forecastTemp.innerHTML = `
-                <p>${temp}°C</p>
-                <p>${humidity}</p>
-                <p>${windSpeed}, ${windDeg}</p>
+                <p>${temp} °C</p>
+                <p>${humidity} %</p>
+                <p>${windDeg} deg, ${windSpeed} spd</p>
             `
             // dayDiv.appendChild(dayDivForecast)
             dayDivForecast.append(forecastDate, forecastTemp);
@@ -184,7 +184,7 @@ async function fetchWeather(city) {
 // Weather Background Image
 function setBgByWeatherId(main) {
     const bg = document.querySelector('.bgImg');
-    console.log(main);
+    // console.log(main);
 
     if (main === "Mist")
         bg.style.backgroundImage = "url('./images/mist.jpg')";
@@ -227,11 +227,86 @@ function showAlert(message) {
 // Fetch when user changes the city
 findCity.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        const city = findCity.value.trim();
+        let city = findCity.value.trim();
+        
+        if (!city) return ;
+        // let searched_cities = JSON.parse(localStorage.getItem('searched_cities')) || [];     // This sometimes works and sometimes don't
+       
+        let searched_cities;
+        try {
+            searched_cities = JSON.parse(localStorage.getItem("searched_cities")) || [];
 
+        } catch {
+
+            searched_cities = [];
+        }
+        // if (!searched_cities.includes(city)) {
+        searched_cities=searched_cities.filter(e=> e!==city)    
+        searched_cities.unshift(city);
+        // }
+        searched_cities = searched_cities.slice(0,5)
+        localStorage.setItem('searched_cities', JSON.stringify(searched_cities))
+        getSeachedCities()
         fetchWeather(city);
     }
 });
+getSeachedCities()
+function getSeachedCities() {
+    const response = localStorage.getItem('searched_cities')
+    let data;
+    try {
+        data = JSON.parse(response)
+    } catch {
+        data = []
+    }
+    if (data.length > 0) {
+        // const input = document.querySelector('#findCity');
+        const Dropdown = document.querySelector('#Dropdown')
+        // Dropdown.classList.add('dropdown')
+        const existingDropdown = document.querySelector('#cityDropdown');
+        if (existingDropdown) { existingDropdown.remove() };
+        const dropDown = document.createElement('select');
+        dropDown.id = 'cityDropdown';
+
+        const defaultCity = document.createElement('option');
+        defaultCity.textContent = 'select';
+        defaultCity.value = '';
+        defaultCity.selected = true;
+        defaultCity.disabled = true;
+        defaultCity.style.color = 'white'
+        defaultCity.style.backgroundColor = 'gray'
+        // defaultCity.style.width = '100%'
+        // defaultCity.style.height = '100%'
+        dropDown.appendChild(defaultCity);
+        data.forEach((e) => {
+            const option = document.createElement('option');
+            option.value = e;
+            option.textContent = e;
+            dropDown.appendChild(option)
+        })
+        console.log(data);
+        const search = document.querySelector('#findCity');
+        dropDown.addEventListener('change', () => {
+            search.value = dropDown.value;
+            fetchWeather(dropDown.value)
+        })
+        Dropdown.appendChild(dropDown)
+        // input.insertAdjacentElement('afterend',dropDown)
+        return;
+    }
+    // const dropDown = document.createElement('select');
+    // dropDown.innerHTML = `
+    // <select>
+    // <option>${data[0]}</option>
+    // <option>${data[1]}</option>
+    // <option>${data[2]}</option>
+    // <option>${data[3]}</option>
+    // <option>${data[4]}</option>
+    // </select>
+    // `
+    // input.appendChild(dropDown)
+    // document.body.appendChild(input)
+}
 
 
 // Default city
