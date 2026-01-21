@@ -211,17 +211,17 @@ function setBgByWeatherId(main) {
     const bg = document.querySelector('.bgImg');
 
     if (main === "Mist")
-        bg.style.backgroundImage = "url('./images/mist.jpg')";
+        bg.style.backgroundImage = "url('https://images.stockcake.com/public/b/d/d/bdd27eb9-196f-4018-9de1-60b9d213e3e8_large/foggy-cityscape-view-stockcake.jpg')";
     else if (main === 'Rain')
-        bg.style.backgroundImage = "url('./images/rainy-forest.jpg')";
+        bg.style.backgroundImage = "url('https://i1.sndcdn.com/artworks-CqvngVszMJbNdmLk-r34fQA-t500x500.jpg')";
     else if (main === 'Snow')
-        bg.style.backgroundImage = "url('./images/snow.jpg')";
+        bg.style.backgroundImage = "url('https://img.freepik.com/free-photo/beautiful-landscape_181624-10218.jpg?semt=ais_hybrid&w=740&q=80')";
     else if (main === 'Haze')
-        bg.style.backgroundImage = "url('./images/haze.jpg')";
+        bg.style.backgroundImage = "url('https://images.pexels.com/photos/19992216/pexels-photo-19992216/free-photo-of-fog-over-street-at-night.jpeg')";
     else if (main === 'Clear')
-        bg.style.backgroundImage = "url('./images/clear.jpg')";
+        bg.style.backgroundImage = "url('https://img.myloview.com/canvas-prints/simple-nature-landscape-photography-of-summer-clear-weather-day-meadow-scenic-view-green-trees-foliage-and-blue-sky-background-700-236156517.jpg')";
     else
-        bg.style.backgroundImage = "url('./images/cloudy.jpg')";
+        bg.style.backgroundImage = "url('https://www.shutterstock.com/image-photo/weather-dramatic-black-rain-clouds-600nw-2353689171.jpg')";
 }
 
 // Show custom alert for:- 1. Invalid city. 2. Empty Input. 3. Network Error etc...
