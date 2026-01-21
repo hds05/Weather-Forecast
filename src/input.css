@@ -28,23 +28,12 @@ header {
     background-repeat: no-repeat;
 }
 
-@media (max-width:768px) {
-    .bgImg {
-        background-size: cover;
-    }
-}
 
 .sun {
     /* animation: floatingSun;
     animation-iteration-count: infinite;
     animation-duration: 2s; */
     animation: floatingSun 2.5s infinite alternate ease-in-out;
-}
-
-@media (max-width:425px) {
-    .sun {
-        animation: none
-    }
 }
 
 @keyframes floatingSun {
@@ -90,7 +79,14 @@ header {
     /* text-align: center; */
     background: rgba(0, 0, 0, 0.466);
     backdrop-filter: blur(15px);
-    border-left: 1px solid rgba(255, 255, 255, 0.3);    
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+.crntBtn{
+    transition: all 0.8s ease;
+}
+.crntBtn:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 5px 10px black
 }
 
 /* weather-details */
@@ -104,6 +100,7 @@ header {
     height: 40vh;
     /* justify-content: space-between; */
 }
+
 .upcomingDays {
     display: flex;
     justify-content: space-around;
@@ -116,11 +113,12 @@ header {
     box-shadow: 0px 1px 1px white;
 }
 
-#Dropdown{
+#Dropdown {
     border-radius: 40px;
     color: black;
 }
-#cityDropdown{
+
+#cityDropdown {
     height: 100%;
     border: none;
     background-color: rgb(61, 59, 59);
@@ -167,16 +165,31 @@ header {
     font-size: 100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.gif{
-width: 150px;
-height:150px
+
+.gif {
+    width: 150px;
+    height: 150px
 }
-@media (max-width:428px){
-    .alertDivChild{
+
+@media (max-width:768px) {
+    .bgImg {
+        background-size: cover;
+    }
+}
+
+@media (max-width:428px) {
+    .alertDivChild {
         font-size: small;
     }
-    .gif{
+
+    .gif {
         width: 70px;
         height: 70px;
+    }
+}
+
+@media (max-width:425px) {
+    .sun {
+        animation: none
     }
 }
