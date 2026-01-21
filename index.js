@@ -60,7 +60,7 @@ async function fetchWeather(city) {
         // convert into parse data
         const data = await response.json();
         
-        // get lat and lon to fetch forecast data
+        // got lat and lon to fetch forecast data
         let lat, lon;
         lat = data.coord.lat
         lon = data.coord.lon
