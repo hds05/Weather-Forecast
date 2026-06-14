@@ -43,6 +43,9 @@ currentLocation.addEventListener('click', (e) => {
 })
 // Default city to show on page load
 let currentCity = "Delhi"
+
+// Default city
+fetchWeather(currentCity);
 // Fetch weather for the given city
 async function fetchWeather(city) {
     try {
@@ -211,17 +214,17 @@ function setBgByWeatherId(main) {
     const bg = document.querySelector('.bgImg');
 
     if (main === "Mist")
-        bg.style.backgroundImage = "url('https://images.stockcake.com/public/b/d/d/bdd27eb9-196f-4018-9de1-60b9d213e3e8_large/foggy-cityscape-view-stockcake.jpg')";
+        bg.style.backgroundImage = "url('/images/foggy-city.jpg')";
     else if (main === 'Rain')
-        bg.style.backgroundImage = "url('https://i1.sndcdn.com/artworks-CqvngVszMJbNdmLk-r34fQA-t500x500.jpg')";
+        bg.style.backgroundImage = "url('/images/rain.avif')";
     else if (main === 'Snow')
-        bg.style.backgroundImage = "url('https://img.freepik.com/free-photo/beautiful-landscape_181624-10218.jpg?semt=ais_hybrid&w=740&q=80')";
+        bg.style.backgroundImage = "url('/images/snow.jpg')";
     else if (main === 'Haze')
-        bg.style.backgroundImage = "url('https://images.pexels.com/photos/19992216/pexels-photo-19992216/free-photo-of-fog-over-street-at-night.jpeg')";
+        bg.style.backgroundImage = "url('/images/haze.avif')";
     else if (main === 'Clear')
-        bg.style.backgroundImage = "url('https://img.myloview.com/canvas-prints/simple-nature-landscape-photography-of-summer-clear-weather-day-meadow-scenic-view-green-trees-foliage-and-blue-sky-background-700-236156517.jpg')";
+        bg.style.backgroundImage = "url('/images/clear-weather.png')";
     else
-        bg.style.backgroundImage = "url('https://www.shutterstock.com/image-photo/weather-dramatic-black-rain-clouds-600nw-2353689171.jpg')";
+        bg.style.backgroundImage = "url('/images/rain-clouds.jpg')";
 }
 
 // Show custom alert for:- 1. Invalid city. 2. Empty Input. 3. Network Error etc...
@@ -283,7 +286,7 @@ getSeachedCities()
 function getSeachedCities() {
     // First get the data from local storage
     const response = localStorage.getItem('searched_cities')
-    let data;
+    let data ;
     try {
         // if data, then parse it
         data = JSON.parse(response)
@@ -293,7 +296,7 @@ function getSeachedCities() {
     }
 
     // if the length of data is more than 0 then create dropdown
-    if (data.length > 0) {
+    if (data) {
         const Dropdown = document.querySelector('#Dropdown')
         // Dropdown.classList.add('dropdown')
         const existingDropdown = document.querySelector('#cityDropdown');
@@ -338,6 +341,3 @@ function getSeachedCities() {
 
 }
 
-
-// Default city
-fetchWeather('Delhi');
